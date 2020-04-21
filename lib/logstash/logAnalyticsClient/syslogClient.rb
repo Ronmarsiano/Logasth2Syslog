@@ -19,6 +19,7 @@ class SyslogClient
 
   def send_messages(documents)
     begin
+        @logger.warn("000000000000000")
         # Try to connect to TCP socket if not connected
         @client_socket ||= connect
         syslog_messages = ""
@@ -56,8 +57,8 @@ class SyslogClient
   def construct_syslog_message(document)
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
     host = "MyMachine"
-    @logger.error("<34>#{timestamp} #{host} #{document.to_s}" )
-    syslog_message = "<34>#{timestamp} #{host} #{document.to_s}"
+    @logger.error("<34>#{timestamp} #{host} #{document.Msg.to_s}" )
+    syslog_message = "<34>#{timestamp} #{host} #{document.Msg.to_s}"
     
     return syslog_message
   end
