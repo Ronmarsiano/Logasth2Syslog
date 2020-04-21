@@ -65,6 +65,9 @@ class SyslogClient
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
     @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^1111^")
     @logger.error(document._to_s)
+    @logger.error("______________________")
+    @logger.error(document.MSG._to_s)
+    @logger.error("______________________")
     logger.error(documents.to_json.to_s)
     @logger.error("&&&&&&&&&&#{document.to_json['Msg'].to_s}&&&&&&&&&&&&^^^^^$$$$$^")
     host = "MyMachine"
