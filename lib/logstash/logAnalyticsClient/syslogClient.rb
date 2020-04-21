@@ -29,12 +29,12 @@ class SyslogClient
         end
         syslog_messages = ""
         documents.each do |document|
-            @logger.error("000000000000000")
             syslog_messages = syslog_messages + construct_syslog_message(document) + "\n"
         end
-        @logger.error("222222222222222222222222")
         @client_socket.write(syslog_messages)
-        @logger.error("33333333333333333333333")
+        @logger.error(@host.to_s)
+        @logger.error(@port.to_s)
+        @logger.error("Done")
     rescue => e
         @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @client_socket.close rescue nil
@@ -63,17 +63,10 @@ class SyslogClient
   def construct_syslog_message(document)
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
     host = "MyMachine"
-    @logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    @logger.error(timestamp.to_s)
-    @logger.error(host.to_s)
-    @logger.error(document.to_s)
-    @logger.error(document.get("MSG"))
-
-    @logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     
     syslog_message = "<34>#{timestamp} #{host} #{document.get("MSG").to_s}"
     
-    @logger.error("Done construct")
+    @logger.error("Done construct #{syslog_message}")
     return syslog_message
   end
 
