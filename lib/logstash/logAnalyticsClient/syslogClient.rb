@@ -20,7 +20,7 @@ class SyslogClient
 
   def send_messages(documents)
     begin
-        @logger.error("000000000000000")
+        
         # Try to connect to TCP socket if not connected
         @client_socket ||= connect
         syslog_messages = ""
@@ -43,11 +43,14 @@ class SyslogClient
 
 
   def connect
+    @logger.error("000000000000000")
     socket = nil
     if udp?
+        @logger.error("0000000000000001")
       socket = UDPSocket.new
       socket.connect(@host, @port)
     else
+      @logger.error("0000000000000002 #{@host} #{@port.to_s}")
       socket = TCPSocket.new(@host, @port)
     end
     socket
