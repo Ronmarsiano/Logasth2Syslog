@@ -22,7 +22,9 @@ class SyslogClient
     begin
         
         # Try to connect to TCP socket if not connected
-        @client_socket ||= connect
+        if @client_socket == nil
+            @client_socket = connect()
+        end
         syslog_messages = ""
         @logger.error("11111111111111111111")
         documents.each do |document|
@@ -42,7 +44,7 @@ class SyslogClient
   end # def send_messages
 
 
-  def connect
+  def connect()
     @logger.error("000000000000000")
     socket = nil
     if udp?
@@ -53,7 +55,7 @@ class SyslogClient
       @logger.error("0000000000000002 #{@host} #{@port.to_s}")
       socket = TCPSocket.new(@host, @port)
     end
-    socket
+    return socket
   end
 
 
