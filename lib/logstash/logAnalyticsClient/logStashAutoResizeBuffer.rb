@@ -26,6 +26,7 @@ class LogStashAutoResizeBuffer
 
     # Adding an event document into the buffer
     def add_event_document(event_document)
+        @logger.error("Sending document #{event_document.to_s}")
         buffer_receive(event_document)
     end # def add_event_document
 
