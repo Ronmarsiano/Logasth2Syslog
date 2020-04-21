@@ -75,12 +75,12 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   def multi_receive(events)
     events.each do |event|
-      # creating document from event
-      document = create_event_document(event)
-      # Skip if document doesn't contain any items  
-      next if (document.keys).length < 1
+      # # creating document from event
+      # document = create_event_document(event)
+      # # Skip if document doesn't contain any items  
+      # next if (document.keys).length < 1
       
-      @logstash_resizable_event_buffer.add_event_document(document)
+      @logstash_resizable_event_buffer.add_event_document(event)
 
     end
   end # def multi_receive
