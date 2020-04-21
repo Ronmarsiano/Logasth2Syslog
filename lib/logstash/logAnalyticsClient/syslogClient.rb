@@ -28,7 +28,6 @@ class SyslogClient
             @client_socket = connect()
         end
         syslog_messages = ""
-        @logger.error("11111111111111111111")
         documents.each do |document|
             @logger.error("000000000000000")
             syslog_messages = syslog_messages + construct_syslog_message(documents) + "\n"
@@ -49,14 +48,11 @@ class SyslogClient
 
   def connect()
     if @udp == true
-        @logger.error("0000000000000001")
       socket = UDPSocket.new
       socket.connect(@host, @port)
     else
-        @logger.error("dsfdsfdsfssfdsfd")
         @logger.error(@host.to_s)
         @logger.error(@port.to_s)
-        @logger.error("0000000000000002 #{@host} #{@port.to_s}")
       socket = TCPSocket.new(@host, @port)
     end
     return socket
@@ -65,8 +61,12 @@ class SyslogClient
 
 
   def construct_syslog_message(document)
+    @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^^")
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
+    @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^1111^")
+    @logger.error("&&&&&&&&&&#{document.Msg.to_s}&&&&&&&&&&&&^^^^^$$$$$^")
     host = "MyMachine"
+    @logger.error("constuct:    #{timestamp._to_s} #{host._to_s} #{document.Msg.to_s}")
     @logger.error("<34>#{timestamp} #{host} #{document.Msg.to_s}" )
     syslog_message = "<34>#{timestamp} #{host} #{document.Msg.to_s}"
     
