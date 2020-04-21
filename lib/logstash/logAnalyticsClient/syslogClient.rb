@@ -64,8 +64,8 @@ class SyslogClient
     @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^^")
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
     @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^1111^")
-    
-    @logger.error(document._to_s)
+
+    @logger.error(document.to_s)
     @logger.error("______________________")
     @logger.error(document.MSG._to_s)
     @logger.error("______________________")
