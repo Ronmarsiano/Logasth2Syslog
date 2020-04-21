@@ -29,9 +29,10 @@ class SyslogClient
         end
         syslog_messages = ""
         documents.each do |document|
-            syslog_messages = syslog_messages + construct_syslog_message(document) + "\n"
+            @client_socket.write(construct_syslog_message(document))
+            # syslog_messages = syslog_messages + construct_syslog_message(document) + "\n"
         end
-        @client_socket.write(syslog_messages)
+        # @client_socket.write(syslog_messages)
         @logger.error(@host.to_s)
         @logger.error(@port.to_s)
         @logger.error("Done")
@@ -65,8 +66,6 @@ class SyslogClient
     host = "MyMachine"
     
     syslog_message = "<34>#{timestamp} #{host} #{document.get("MSG").to_s}"
-    
-    @logger.error("Done construct #{syslog_message}")
     return syslog_message
   end
 
