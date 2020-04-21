@@ -37,7 +37,7 @@ class LogStashAutoResizeBuffer
             @logger.warn("No documents in batch for log type #{@logstashLoganalyticsConfiguration.custom_log_table_name}. Skipping")
             return
         end
-
+        @logger.warn("Sending document #{documents.to_s}")
         @client.send_messages(documents)
 
         # # We send Json in the REST request 
