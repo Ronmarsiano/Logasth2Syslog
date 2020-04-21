@@ -27,7 +27,6 @@ class SyslogClient
             syslog_messages = syslog_messages + construct_syslog_message(documents) + "\n"
         end
         @client_socket.write(syslog_messages)
-
     rescue => e
         @logger.warn("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @client_socket.close rescue nil
@@ -35,6 +34,7 @@ class SyslogClient
         sleep(@reconnect_interval)
         # Retrying after reconnect interval
         send_messages(documents)
+    end
   end # def send_messages
 
 
