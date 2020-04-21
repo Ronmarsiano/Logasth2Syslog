@@ -63,7 +63,7 @@ class SyslogClient
   def construct_syslog_message(document)
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
     host = "MyMachine"
-    @logger.error("construct:    #{timestamp._to_s} #{host._to_s} #{document.get('MSG').to_s}")
+    @logger.error("construct:    #{timestamp.to_s} #{host.to_s} #{document.get('MSG').to_s}")
     
     syslog_message = "<34>#{timestamp} #{host} #{document.get("MSG").to_s}"
     
