@@ -8,15 +8,16 @@ require 'socket'
 require 'time'
 
 class SyslogClient
-  @client_socket = nil
-  @host = "52.226.134.95"
-  @port = 514
-  @udp = false
-  @reconnect_interval = 1000
+
 
   def initialize (logstashLoganalyticsConfiguration)
     @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
     @logger = @logstashLoganalyticsConfiguration.logger
+    @host = "52.226.134.95"
+    @port = 514
+    @client_socket = nil
+    @udp = false
+    @reconnect_interval = 1000
   end # def initialize
 
   def send_messages(documents)
