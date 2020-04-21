@@ -4,6 +4,7 @@ require 'rest-client'
 require 'json'
 require 'openssl'
 require 'base64'
+require 'socket'
 require 'time'
 
 class SyslogClient
