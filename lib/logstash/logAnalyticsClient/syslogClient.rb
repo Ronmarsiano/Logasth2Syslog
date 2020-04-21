@@ -66,7 +66,7 @@ class SyslogClient
     @logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     @logger.error(timestamp.to_s)
     @logger.error(host.to_s)
-    @logger.error(document)
+    @logger.error(document.to_s)
     @logger.error(document.get("MSG").to_s)
     @logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     
