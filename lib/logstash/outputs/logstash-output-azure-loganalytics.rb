@@ -80,7 +80,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       # Skip if document doesn't contain any items  
       next if (document.keys).length < 1
       
-      @logger.trace("Adding event document - " + event.to_s)
+      @logger.error("Adding event document - " + event.to_s)
       @logstash_resizable_event_buffer.add_event_document(document)
 
     end
