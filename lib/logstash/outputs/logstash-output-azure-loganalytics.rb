@@ -81,7 +81,8 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       # next if (document.keys).length < 1
       @logger.error("1*1*1******************************(9999")
 
-      @logger.error(event.to_yaml)
+      @logger.error(event.get("MSG"))
+      @logger.error("1*1*1***************\n\n\n\n\n\n\n\n\n***************(9999")
       @logstash_resizable_event_buffer.add_event_document(event)
 
     end
