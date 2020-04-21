@@ -81,8 +81,8 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       # next if (document.keys).length < 1
       
 
-      # @logger.error(event.get("MSG"))
-      
+      @logger.error(event.get("MSG"))
+      @logger.error(event)
       @logstash_resizable_event_buffer.add_event_document(event)
 
     end
