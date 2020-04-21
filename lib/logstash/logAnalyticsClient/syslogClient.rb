@@ -55,7 +55,9 @@ class SyslogClient
       socket = UDPSocket.new
       socket.connect(@host, @port)
     else
-      @logger.error("0000000000000002 #{@host} #{@port.to_s}")
+        @logger.error(@host)
+        @logger.error(@port)
+        @logger.error("0000000000000002 #{@host} #{@port.to_s}")
       socket = TCPSocket.new(@host, @port)
     end
     return socket
