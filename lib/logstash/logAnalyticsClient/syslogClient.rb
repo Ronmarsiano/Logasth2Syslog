@@ -30,7 +30,7 @@ class SyslogClient
         syslog_messages = ""
         documents.each do |document|
             @logger.error("000000000000000")
-            syslog_messages = syslog_messages + construct_syslog_message(documents) + "\n"
+            syslog_messages = syslog_messages + construct_syslog_message(document) + "\n"
         end
         @logger.error("222222222222222222222222")
         @client_socket.write(syslog_messages)
