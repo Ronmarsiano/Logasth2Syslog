@@ -61,21 +61,13 @@ class SyslogClient
 
 
   def construct_syslog_message(document)
-    @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^^")
     timestamp = Time.now.strftime("%{+MMM dd HH:mm:ss}")
-    @logger.error("&&&&&&&&&&&&&&&&&&&&&&^^^^^1111^")
-
-    @logger.error(document.to_s)
-    @logger.error("______________________")
-    @logger.error(document['MSG'].to_s)
-    @logger.error("______________________")
-    logger.error(documents.to_json.to_s)
-    @logger.error("&&&&&&&&&&#{document.to_json['Msg'].to_s}&&&&&&&&&&&&^^^^^$$$$$^")
     host = "MyMachine"
-    @logger.error("constuct:    #{timestamp._to_s} #{host._to_s} #{document.Msg.to_s}")
-    @logger.error("<34>#{timestamp} #{host} #{document.Msg.to_s}" )
-    syslog_message = "<34>#{timestamp} #{host} #{document.Msg.to_s}"
+    @logger.error("construct:    #{timestamp._to_s} #{host._to_s} #{document.get('MSG').to_s}")
     
+    syslog_message = "<34>#{timestamp} #{host} #{document.get("MSG").to_s}"
+    
+    @logger.error("Done construct")
     return syslog_message
   end
 
