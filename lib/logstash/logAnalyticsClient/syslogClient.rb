@@ -48,7 +48,9 @@ class SyslogClient
   def connect()
     @logger.error("000000000000000")
     socket = nil
-    if @udp?
+    @logger.error("0000000000&&&&&&&&&&&&00000")
+
+    if @udp == false
         @logger.error("0000000000000001")
       socket = UDPSocket.new
       socket.connect(@host, @port)
