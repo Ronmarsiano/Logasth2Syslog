@@ -7,9 +7,8 @@ require 'base64'
 require 'time'
 
 class SyslogClient
-  API_VERSION = '2016-04-01'.freeze
   @client_socket = nil
-  @host = "127.0.0.1"
+  @host = "52.226.134.95"
   @port = 514
   @udp = false
   @reconnect_interval = 1000
