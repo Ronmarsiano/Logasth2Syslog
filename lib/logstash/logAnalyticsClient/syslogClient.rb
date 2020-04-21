@@ -14,24 +14,24 @@ class SyslogClient
   @reconnect_interval = 1000
 
   def initialize (logstashLoganalyticsConfiguration)
-    
+    @logger = @logstashLoganalyticsConfiguration.logger
   end # def initialize
 
   def send_messages(documents)
     begin
-        @logger.warn("000000000000000")
+        @logger.error("000000000000000")
         # Try to connect to TCP socket if not connected
         @client_socket ||= connect
         syslog_messages = ""
-        @logger.warn("11111111111111111111")
+        @logger.error("11111111111111111111")
         documents.each do |document|
             syslog_messages = syslog_messages + construct_syslog_message(documents) + "\n"
         end
-        @logger.warn("222222222222222222222222")
+        @logger.error("222222222222222222222222")
         @client_socket.write(syslog_messages)
-        @logger.warn("33333333333333333333333")
+        @logger.error("33333333333333333333333")
     rescue => e
-        @logger.warn("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
+        @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @client_socket.close rescue nil
         @client_socket = nil
         sleep(@reconnect_interval)
