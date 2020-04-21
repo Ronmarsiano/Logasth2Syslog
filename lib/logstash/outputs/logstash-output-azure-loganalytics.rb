@@ -79,7 +79,8 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       # document = create_event_document(event)
       # # Skip if document doesn't contain any items  
       # next if (document.keys).length < 1
-      
+      @logger.error("********************************(9999")
+      @logger.error(event.MSG)
       @logstash_resizable_event_buffer.add_event_document(event)
 
     end
