@@ -30,6 +30,7 @@ class SyslogClient
         syslog_messages = ""
         @logger.error("11111111111111111111")
         documents.each do |document|
+            @logger.error("000000000000000")
             syslog_messages = syslog_messages + construct_syslog_message(documents) + "\n"
         end
         @logger.error("222222222222222222222222")
@@ -47,11 +48,7 @@ class SyslogClient
 
 
   def connect()
-    @logger.error("000000000000000")
-    socket = nil
-    @logger.error("0000000000&&&&&&&&&&&&00000")
-
-    if @udp == false
+    if @udp == true
         @logger.error("0000000000000001")
       socket = UDPSocket.new
       socket.connect(@host, @port)
