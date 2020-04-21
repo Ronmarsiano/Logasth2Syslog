@@ -14,6 +14,7 @@ class SyslogClient
   @reconnect_interval = 1000
 
   def initialize (logstashLoganalyticsConfiguration)
+    @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
     @logger = @logstashLoganalyticsConfiguration.logger
   end # def initialize
 
