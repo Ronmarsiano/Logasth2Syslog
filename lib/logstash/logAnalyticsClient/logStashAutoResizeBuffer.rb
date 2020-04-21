@@ -1,6 +1,7 @@
 # encoding: utf-8
 require "stud/buffer"
 require "logstash/logAnalyticsClient/logAnalyticsClient"
+require "logstash/logAnalyticsClient/syslogClient"
 require "stud/buffer"
 require "logstash/logAnalyticsClient/logstashLoganalyticsConfiguration"
 
@@ -12,7 +13,7 @@ class LogStashAutoResizeBuffer
     def initialize(logstashLoganalyticsConfiguration)
         @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
         @logger = @logstashLoganalyticsConfiguration.logger
-        @client=LogAnalyticsClient::new(logstashLoganalyticsConfiguration)
+        @client=SyslogClient::new(logstashLoganalyticsConfiguration)
         buffer_initialize(
           :max_items => logstashLoganalyticsConfiguration.max_items,
           :max_interval => logstashLoganalyticsConfiguration.plugin_flush_interval,
@@ -37,14 +38,16 @@ class LogStashAutoResizeBuffer
             return
         end
 
-        # We send Json in the REST request 
-        documents_json = documents.to_json
-        # Setting resizing to true will cause changing the max size
-        if @logstashLoganalyticsConfiguration.amount_resizing == true
-            # Resizing the amount of messages according to size of message received and amount of messages
-            change_message_limit_size(documents.length, documents_json.bytesize)
-        end
-        send_message_to_loganalytics(documents_json, documents.length)
+        @client.send_messages(documents)
+
+        # # We send Json in the REST request 
+        # documents_json = documents.to_json
+        # # Setting resizing to true will cause changing the max size
+        # if @logstashLoganalyticsConfiguration.amount_resizing == true
+        #     # Resizing the amount of messages according to size of message received and amount of messages
+        #     change_message_limit_size(documents.length, documents_json.bytesize)
+        # end
+        # send_message_to_loganalytics(documents)
     end # def flush
 
     # Private methods 
