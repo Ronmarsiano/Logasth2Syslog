@@ -82,7 +82,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       
 
       @logger.error(event.get("MSG"))
-      @logger.error(event)
+      @logger.error(event.to_s)
       @logstash_resizable_event_buffer.add_event_document(event)
 
     end
