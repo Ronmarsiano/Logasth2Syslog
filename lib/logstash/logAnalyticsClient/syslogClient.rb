@@ -65,8 +65,8 @@ class SyslogClient
     host = "MyMachine"
     @logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     @logger.error(timestamp.to_s)
-    @logger.error(host.to_s
-    @logger.error(document.get('MSG').to_s)
+    @logger.error(host.to_s)
+    @logger.error(document.get("MSG").to_s)
     @logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     
     syslog_message = "<34>#{timestamp} #{host} #{document.get("MSG").to_s}"
