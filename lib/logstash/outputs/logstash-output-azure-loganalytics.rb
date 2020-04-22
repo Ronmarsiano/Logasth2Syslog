@@ -48,7 +48,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
         @codec = LogStash::Codecs::Plain.new({"format" => @message})
       end
     end
-    
+
     @codec.on_event(&method(:publish))
   end # def register
 
@@ -59,7 +59,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   end # def multi_receive
 
   def publish(event, payload)
-    @logger.error("Event: #{event} Paylod: #{payload}")
+    @logger.error("Event:\n\n #{event} \n\n\nPaylod: #{payload}\n\n *********************\n")
     # strip the message from special characters 
     message = payload.to_s.rstrip.gsub(/[\r][\n]/, "\n").gsub(/[\n]/, '\n')
     @logstash_resizable_event_buffer.add_single_event(message)
