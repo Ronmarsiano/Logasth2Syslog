@@ -39,10 +39,6 @@ class LogstashLoganalyticsOutputConfiguration
         @logger
     end
 
-    def time_generated_field
-        @time_generated_field
-    end
-
     def max_items
         @max_items
     end
@@ -57,10 +53,6 @@ class LogstashLoganalyticsOutputConfiguration
     
     def max_items=(new_max_items)
         @max_items = new_max_items
-    end
-
-    def time_generated_field=(new_time_generated_field)
-        @time_generated_field = new_time_generated_field
     end
 
     def plugin_flush_interval=(new_plugin_flush_interval)

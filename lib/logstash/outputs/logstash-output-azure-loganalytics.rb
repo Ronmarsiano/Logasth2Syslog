@@ -12,10 +12,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # Stating that the output plugin will run in concurrent mode
   concurrency :shared
 
-  # The name of the time generated field.
-  # Be careful that the value of field should strictly follow the ISO 8601 format (YYYY-MM-DDThh:mm:ssZ)
-  config :time_generated_field, :validate => :string, :default => ''
-
   # # Max number of items to buffer before flushing. Default 50.
   # config :flush_items, :validate => :number, :default => 50
   
@@ -60,7 +56,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # Return LogstashLoganalyticsOutputConfiguration populated with the configuration values
   def build_logstash_configuration()
     logstash_configuration= LogstashLoganalyticsOutputConfiguration::new(@logger)    
-    logstash_configuration.time_generated_field = @time_generated_field
     logstash_configuration.plugin_flush_interval = @plugin_flush_interval
     logstash_configuration.max_items = @max_items
     logstash_configuration.destination_ip = @destination_ip
