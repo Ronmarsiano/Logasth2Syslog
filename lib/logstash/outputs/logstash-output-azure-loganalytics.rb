@@ -48,7 +48,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
         @codec = LogStash::Codecs::Plain.new({"format" => @message})
       end
     end
-    @codec.on_event(&method(:publish))
 
   end # def register
 
