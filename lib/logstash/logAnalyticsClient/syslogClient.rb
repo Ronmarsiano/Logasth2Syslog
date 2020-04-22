@@ -30,7 +30,7 @@ class SyslogClient
         syslog_messages = ""
         documents.each do |document|
             single_syslog_message = construct_syslog_message(document)
-            @logger.error("Message to be sent: \n\n #{single_syslog_message}")
+            # @logger.error("Message to be sent: \n\n #{single_syslog_message}")
             @client_socket.write(single_syslog_message)
             @logger.error("Message was sent.")
             # syslog_messages = syslog_messages + construct_syslog_message(document) + "\n"
