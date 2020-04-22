@@ -14,8 +14,6 @@ class SyslogClient
     @logger = @logstashLoganalyticsConfiguration.logger
     @destination_ip = @logstashLoganalyticsConfiguration.destination_ip
     @destination_port = @logstashLoganalyticsConfiguration.destination_port
-    @host = "52.226.134.95"
-    @port = 514
     @client_socket = nil
     @udp = false
     @reconnect_interval = 1000
@@ -23,7 +21,7 @@ class SyslogClient
 
   def send_messages(events)
     begin
-        logger.info("trying to connect the socket")
+        @logger.info("trying to connect the socket")
         # Try to connect to TCP socket if not connected
         if @client_socket == nil
             @client_socket = connect()
@@ -31,16 +29,16 @@ class SyslogClient
         syslog_messages = ""
         message_counter = 0
         events.each do |document|
-            logger.info("Creating syslog message from input")
+            @logger.info("Creating syslog message from input")
             single_syslog_message = construct_syslog_message(document)
-            logger.info("Syslog message created")
+            @logger.info("Syslog message created")
             syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
-            logger.info("Syslog Message:\n#{syslog_messages}")
+            @logger.info("Syslog Message:\n#{syslog_messages}")
             message_counter = message_counter + 1
         end
-        logger.info("Trying to write syslog message to socket")
+        @logger.info("Trying to write syslog message to socket")
         @client_socket.write(syslog_messages)
-        logger.info("Syslog message was sent.\nContent:\n#{syslog_messages}")
+        @logger.info("Syslog message was sent.\nContent:\n#{syslog_messages}")
         @logger.info("Messages(#{message_counter}) sent.")
     rescue => e
         # @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
@@ -56,14 +54,14 @@ class SyslogClient
   def connect()
     if @udp == true
       socket = UDPSocket.new
-      socket.connect(@host, @port)
+      socket.connect(@destination_ip, @destination_port)
     else
-        logger.info("TCP socket")
-        socket = TCPSocket.new(@host, @port)
-        logger.info("TCP socket created and connected")
+        @logger.info("TCP socket")
+        socket = TCPSocket.new(@destination_ip, @destination_port)
+        @logger.info("TCP socket created and connected")
         # Setting a keep alive on the socket 
         socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
-        logger.info("TCP socket set keep alive value")
+        @logger.info("TCP socket set keep alive value")
         return socket
     end
     return socket
