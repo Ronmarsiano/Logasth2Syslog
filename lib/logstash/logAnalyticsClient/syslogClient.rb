@@ -35,7 +35,7 @@ class SyslogClient
             message_counter = message_counter + 1
         end
         @client_socket.write(syslog_messages)
-        @logger.error("Messages(#{message_counter}) sent.")
+        @logger.info("Messages(#{message_counter}) sent.")
     rescue => e
         @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @client_socket.close rescue nil
