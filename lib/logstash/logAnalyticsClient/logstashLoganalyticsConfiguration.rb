@@ -4,8 +4,6 @@ class LogstashLoganalyticsOutputConfiguration
         @custom_log_table_name = custom_log_table_name
         @logger = logger
 
-        # Delay between each resending of a message
-        @RETRANSMISSION_DELAY = 2
         @MIN_MESSAGE_AMOUNT = 100
         # Maximum of 30 MB per post to Log Analytics Data Collector API. 
         # This is a size limit for a single post. 
@@ -53,10 +51,6 @@ class LogstashLoganalyticsOutputConfiguration
         @amount_resizing
     end
 
-    def retransmission_time
-        @retransmission_time
-    end
-
     def logger
         @logger
     end
@@ -67,10 +61,6 @@ class LogstashLoganalyticsOutputConfiguration
 
     def custom_log_table_name
         @custom_log_table_name
-    end
-
-    def endpoint
-        @endpoint
     end
 
     def time_generated_field
@@ -95,10 +85,6 @@ class LogstashLoganalyticsOutputConfiguration
     
     def max_items=(new_max_items)
         @max_items = new_max_items
-    end
-
-    def endpoint=(new_endpoint)
-        @endpoint = new_endpoint
     end
 
     def time_generated_field=(new_time_generated_field)
