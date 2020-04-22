@@ -59,10 +59,9 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   end # def multi_receive
 
   def publish(event, payload)
-    @logger.error("Event:\n\n #{event} \n\n\nPaylod: #{payload}\n\n *********************\n")
     # strip the message from special characters 
-    message = payload.to_s.rstrip.gsub(/[\r][\n]/, "\n").gsub(/[\n]/, '\n')
-    @logstash_resizable_event_buffer.add_single_event(message)
+    tripped_message = payload.to_s.rstrip.gsub(/[\r][\n]/, "\n").gsub(/[\n]/, '\n')
+    @logstash_resizable_event_buffer.add_single_event(tripped_message)
   end
 
   # Building the logstash object configuration from the output configuration provided by the user
