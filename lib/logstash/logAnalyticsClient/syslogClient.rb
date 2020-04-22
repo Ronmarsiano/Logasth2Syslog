@@ -35,7 +35,7 @@ class SyslogClient
             # @client_socket.write("\n")
             # @client_socket.flush\
             @logger.error("Adding message")
-            syslog_messages = "#{syslog_message}#{single_syslog_message}\n"
+            syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
         end
         @client_socket.write(syslog_messages)
         @logger.error("Message was sent.\n#{syslog_messages}")
