@@ -21,16 +21,16 @@ class SyslogClient
 
   def send_messages(events)
     begin
-        @logger.info("trying to connect the socket")
         # Try to connect to TCP socket if not connected
         if @client_socket == nil
+            @logger.info("trying to connect the socket")
             @client_socket = connect()
         end
         syslog_messages = ""
         message_counter = 0
-        events.each do |document|
+        events.each do |event|
             @logger.info("Creating syslog message from input")
-            single_syslog_message = construct_syslog_message(document)
+            single_syslog_message = event
             @logger.info("Syslog message created")
             syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
             @logger.info("Syslog Message:\n#{syslog_messages}")

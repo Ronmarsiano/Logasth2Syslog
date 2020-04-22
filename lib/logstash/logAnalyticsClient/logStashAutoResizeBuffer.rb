@@ -26,8 +26,18 @@ class LogStashAutoResizeBuffer
 
     # Adding an event document into the buffer
     def add_single_event(single_event)
-        buffer_receive(single_event)
+        buffer_receive(construct_syslog_message(single_event))
     end # def add_single_event
+
+    def construct_syslog_message(event)
+        timestamp = Time.now.strftime("%b %e %H:%M:%S")
+        host = "MyMachine"
+        # Here we construct the message from the tokens we have 
+        syslog_message = "<34>#{timestamp} #{host} #{event}"
+    
+        @logger.info("Message:\n\n#{syslog_message}\n\n")
+        return syslog_message
+      end
 
     # Flushing all buffer content to Azure Loganalytics.
     # Called from Stud::Buffer#buffer_flush when there are events to flush
