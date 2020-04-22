@@ -23,6 +23,7 @@ class SyslogClient
 
   def send_messages(events)
     begin
+        logger.info("trying to connect the socket")
         # Try to connect to TCP socket if not connected
         if @client_socket == nil
             @client_socket = connect()
@@ -30,14 +31,19 @@ class SyslogClient
         syslog_messages = ""
         message_counter = 0
         events.each do |document|
+            logger.info("Creating syslog message from input")
             single_syslog_message = construct_syslog_message(document)
+            logger.info("Syslog message created")
             syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
+            logger.info("Syslog Message:\n#{syslog_messages}")
             message_counter = message_counter + 1
         end
+        logger.info("Trying to write syslog message to socket")
         @client_socket.write(syslog_messages)
+        logger.info("Syslog message was sent.\nContent:\n#{syslog_messages}")
         @logger.info("Messages(#{message_counter}) sent.")
     rescue => e
-        @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
+        # @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @client_socket.close rescue nil
         @client_socket = nil
         sleep(@reconnect_interval)
@@ -52,9 +58,12 @@ class SyslogClient
       socket = UDPSocket.new
       socket.connect(@host, @port)
     else
+        logger.info("TCP socket")
         socket = TCPSocket.new(@host, @port)
+        logger.info("TCP socket created and connected")
         # Setting a keep alive on the socket 
         socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
+        logger.info("TCP socket set keep alive value")
         return socket
     end
     return socket
