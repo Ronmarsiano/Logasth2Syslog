@@ -66,6 +66,7 @@ class SyslogClient
     # Here we construct the message from the tokens we have 
     syslog_message = "<34> #{timestamp} #{host} CEF:0|#{event}"
 
+    @logger.info("Message:\n\n#{syslog_message}\n\n")
     return syslog_message
   end
 
