@@ -33,29 +33,28 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   public
   def register
-    @logger.error("Test")
-    # @logstash_configuration= build_logstash_configuration()
-    # # Validate configuration correctness 
-    # @logstash_configuration.validate_configuration()
-    # @logger.info("Logstash Azure Loganalytics output plugin configuration was found valid")
+    @logstash_configuration= build_logstash_configuration()
+    # Validate configuration correctness 
+    @logstash_configuration.validate_configuration()
+    @logger.info("Logstash Azure Loganalytics output plugin configuration was found valid")
 
-    # # Initialize the logstash resizable buffer
-    # # This buffer will increase and decrease size according to the amount of messages inserted.
-    # # If the buffer reached the max amount of messages the amount will be increased until the limit
-    # @logstash_resizable_event_buffer=LogStashAutoResizeBuffer::new(@logstash_configuration)
+    # Initialize the logstash resizable buffer
+    # This buffer will increase and decrease size according to the amount of messages inserted.
+    # If the buffer reached the max amount of messages the amount will be increased until the limit
+    @logstash_resizable_event_buffer=LogStashAutoResizeBuffer::new(@logstash_configuration)
 
-    # if @codec.instance_of? LogStash::Codecs::Plain
-    #   if @codec.config["format"].nil?
-    #     @codec = LogStash::Codecs::Plain.new({"format" => @message})
-    #   end
-    # end
+    if @codec.instance_of? LogStash::Codecs::Plain
+      if @codec.config["format"].nil?
+        @codec = LogStash::Codecs::Plain.new({"format" => @message})
+      end
+    end
 
-    # @codec.on_event(&method(:publish))
+    @codec.on_event(&method(:publish))
   end # def register
 
   def multi_receive(events)
     events.each do |event|
-      # @codec.encode(event)
+      @codec.encode(event)
     end
   end # def multi_receive
 
