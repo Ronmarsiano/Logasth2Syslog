@@ -56,9 +56,13 @@ class SyslogClient
       socket = UDPSocket.new
       socket.connect(@host, @port)
     else
-        @logger.error(@host.to_s)
-        @logger.error(@port.to_s)
+      @logger.error(@host.to_s)
+      @logger.error(@port.to_s)
       socket = TCPSocket.new(@host, @port)
+      socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
+      socket.setsockopt(Socket::SOL_TCP, Socket::TCP_KEEPIDLE, 50)
+      socket.setsockopt(Socket::SOL_TCP, Socket::TCP_KEEPINTVL, 10)
+      socket.setsockopt(Socket::SOL_TCP, Socket::TCP_KEEPCNT, 5)
     end
     return socket
   end
@@ -69,10 +73,8 @@ class SyslogClient
     timestamp = Time.now.strftime("%b %e %H:%M:%S")
     @logger.error("Timestamp: #{timestamp}\n\n")
     host = "MyMachine"
-    dummy_message = "CEF:0|Citrix|NetScaler|NS10.0|APPFW|APPFW_STARTURL|6|src=10.217.253.78 spt=53743 method=GET request=http://vpx247.example.net/FFC/login.html msg=Disallow Illegal URL. cn1=233 cn2=205 cs1=profile1 cs2=PPE0 cs3=AjSZM26h2M+xL809pON6C8joebUA000 cs4=ALERT cs5=2012 act=blocked"
-    # syslog_message = "<34> #{timestamp} #{host} #{event.get("MSG").to_s}"
-    syslog_message = "<34> #{timestamp} #{host} #{dummy_message}"
-
+    # Here we construct the message from the tokens we have 
+    syslog_message = "<34> #{timestamp} #{host} CEF:0|#{event.get("MSG").to_s}"
 
     return syslog_message
   end
