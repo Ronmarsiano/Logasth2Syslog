@@ -47,10 +47,9 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       if @codec.config["format"].nil?
         @codec = LogStash::Codecs::Plain.new({"format" => @message})
       end
-
-      @codec.on_event(&method(:publish))
     end
-
+    
+    @codec.on_event(&method(:publish))
   end # def register
 
   def multi_receive(events)
