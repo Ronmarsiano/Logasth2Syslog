@@ -46,8 +46,9 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     if @codec.instance_of? LogStash::Codecs::Plain
       if @codec.config["format"].nil?
         @codec = LogStash::Codecs::Plain.new({"format" => @message})
-        @codec.on_event(&method(:publish))
       end
+
+      @codec.on_event(&method(:publish))
     end
 
   end # def register
@@ -57,9 +58,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
       @codec.encode(event)
     end
   end # def multi_receive
-  
-  #private 
-  private
 
   def publish(event, payload)
     @logger.error("Event: #{event} Paylod: #{payload}")
