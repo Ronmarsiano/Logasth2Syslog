@@ -63,6 +63,10 @@ class SyslogClient
       socket.setsockopt(Socket::SOL_TCP, Socket::TCP_KEEPIDLE, 50)
       socket.setsockopt(Socket::SOL_TCP, Socket::TCP_KEEPINTVL, 10)
       socket.setsockopt(Socket::SOL_TCP, Socket::TCP_KEEPCNT, 5)
+
+      socket.write("bla bla ")
+      @logger.error("ddddD")
+      return socket
     end
     return socket
   end
