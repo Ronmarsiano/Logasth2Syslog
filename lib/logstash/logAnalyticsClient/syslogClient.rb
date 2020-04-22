@@ -28,17 +28,11 @@ class SyslogClient
         end
         syslog_messages = ""
         message_counter = 0
-        events.each do |event|
-            @logger.info("Creating syslog message from input")
-            single_syslog_message = event
-            @logger.info("Syslog message created")
+        events.each do |single_syslog_message|
             syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
-            @logger.info("Syslog Message:\n#{syslog_messages}")
             message_counter = message_counter + 1
         end
-        @logger.info("Trying to write syslog message to socket")
         @client_socket.write(syslog_messages)
-        @logger.info("Syslog message was sent.\nContent:\n#{syslog_messages}")
         @logger.info("Messages(#{message_counter}) sent.")
     rescue => e
         # @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
@@ -56,25 +50,11 @@ class SyslogClient
       socket = UDPSocket.new
       socket.connect(@destination_ip, @destination_port)
     else
-        @logger.info("TCP socket")
         socket = TCPSocket.new(@destination_ip, @destination_port)
-        @logger.info("TCP socket created and connected")
         # Setting a keep alive on the socket 
         socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
-        @logger.info("TCP socket set keep alive value")
         return socket
     end
     return socket
   end
-
-  def construct_syslog_message(event)
-    timestamp = Time.now.strftime("%b %e %H:%M:%S")
-    host = "MyMachine"
-    # Here we construct the message from the tokens we have 
-    syslog_message = "<34>#{timestamp} #{host} #{event}"
-
-    @logger.info("Message:\n\n#{syslog_message}\n\n")
-    return syslog_message
-  end
-
 end # end of class
