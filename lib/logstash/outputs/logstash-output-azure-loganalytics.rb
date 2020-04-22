@@ -63,7 +63,9 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   def publish(event, payload)
     @logger.error("Event: #{event} Paylod: #{payload}")
-    @logstash_resizable_event_buffer.add_single_event(event)
+    # strip the message from special characters 
+    message = payload.to_s.rstrip.gsub(/[\r][\n]/, "\n").gsub(/[\n]/, '\n')
+    @logstash_resizable_event_buffer.add_single_event(message)
   end
 
   # Building the logstash object configuration from the output configuration provided by the user
