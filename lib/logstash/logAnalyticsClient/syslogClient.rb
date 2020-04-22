@@ -63,6 +63,7 @@ class SyslogClient
   def construct_syslog_message(event)
     timestamp = Time.now.strftime("%b %e %H:%M:%S")
     host = "MyMachine"
+    @logger.error("This is the message:\n\n#{event.get("message").to_s}")
     # Here we construct the message from the tokens we have 
     syslog_message = "<34> #{timestamp} #{host} CEF:0|#{event.get("MSG").to_s}"
 
