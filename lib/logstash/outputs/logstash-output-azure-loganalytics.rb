@@ -53,7 +53,8 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   def multi_receive(events)
     events.each do |event|
-      @logstash_resizable_event_buffer.add_single_event(@codec.encode(event))
+      event.set("message", @codec.encode(event))
+      @logstash_resizable_event_buffer.add_single_event(event)
     end
   end # def multi_receive
   
