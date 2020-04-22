@@ -30,7 +30,7 @@ class SyslogClient
         events.each do |document|
             single_syslog_message = construct_syslog_message(document)
             syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
-            message_counter++
+            message_counter = message_counter + 1
         end
         @client_socket.write(syslog_messages)
         @logger.error("Messages(#{message_counter}) sent.")
