@@ -16,7 +16,7 @@ class LogstashLoganalyticsOutputConfiguration
     def validate_configuration()
         if @max_items < @MIN_MESSAGE_AMOUNT
             raise ArgumentError, "Setting max_items to value must be greater then #{@MIN_MESSAGE_AMOUNT}."
-
+        end
         @logger.info("Azure Loganalytics configuration was found valid.")
         
         # If all validation pass then configuration is valid 
