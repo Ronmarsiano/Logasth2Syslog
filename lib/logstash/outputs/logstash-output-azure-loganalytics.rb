@@ -12,29 +12,15 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # Stating that the output plugin will run in concurrent mode
   concurrency :shared
 
-  # The name of the event type that is being submitted to Log Analytics. 
-  # This must be only alpha characters.
-  # Table name under custom logs in which the data will be inserted
-  config :custom_log_table_name, :validate => :string, :required => true
-
   # The name of the time generated field.
   # Be careful that the value of field should strictly follow the ISO 8601 format (YYYY-MM-DDThh:mm:ssZ)
   config :time_generated_field, :validate => :string, :default => ''
-
-  # Subset of keys to send to the Azure Loganalytics workspace
-  config :key_names, :validate => :array, :default => []
 
   # # Max number of items to buffer before flushing. Default 50.
   # config :flush_items, :validate => :number, :default => 50
   
   # Max number of seconds to wait between flushes. Default 5
   config :plugin_flush_interval, :validate => :number, :default => 5
-
-  # Factor for adding to the amount of messages sent
-  config :decrease_factor, :validate => :number, :default => 100
-
-  # This will trigger message amount resizing in a REST request to LA
-  config :amount_resizing, :validate => :boolean, :default => true
 
   # This will trigger message amount resizing in a REST request to LA
   config :destination_ip, :validate => :string, :default => "52.226.134.95"
@@ -43,8 +29,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   config :destination_port, :validate => :number, :default => 514
 
 
-  # Setting the default amount of messages sent                                                                                                    
-  # it this is set with amount_resizing=false --> each message will have max_items
   config :max_items, :validate => :number, :default => 2000
 
   public
@@ -63,10 +47,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   def multi_receive(events)
     events.each do |event|
-      # # creating document from event
-      # document = create_event_document(event)
-      # # Skip if document doesn't contain any items  
-      # next if (document.keys).length < 1
       @logstash_resizable_event_buffer.add_single_event(event)
 
     end
@@ -75,35 +55,13 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   #private 
   private
 
-  # In case that the user has defined key_names meaning that he would like to a subset of the data,
-  # we would like to insert only those keys.
-  # If no keys were defined we will send all the data 
-   
-  def create_event_document(event)
-    document = {}
-    event_hash = event.to_hash()
-    if @key_names.length > 0
-      # Get the intersection of key_names and keys of event_hash
-      keys_intersection = @key_names & event_hash.keys
-      keys_intersection.each do |key|
-        document[key] = event_hash[key]
-      end
-    else
-      document = event_hash
-    end
-
-    return document
-  end # def create_event_document
 
   # Building the logstash object configuration from the output configuration provided by the user
   # Return LogstashLoganalyticsOutputConfiguration populated with the configuration values
   def build_logstash_configuration()
-    logstash_configuration= LogstashLoganalyticsOutputConfiguration::new(@custom_log_table_name, @logger)    
+    logstash_configuration= LogstashLoganalyticsOutputConfiguration::new(@logger)    
     logstash_configuration.time_generated_field = @time_generated_field
-    logstash_configuration.key_names = @key_names
     logstash_configuration.plugin_flush_interval = @plugin_flush_interval
-    logstash_configuration.decrease_factor = @decrease_factor
-    logstash_configuration.amount_resizing = @amount_resizing
     logstash_configuration.max_items = @max_items
     logstash_configuration.destination_ip = @destination_ip
     logstash_configuration.destination_port = @destination_port

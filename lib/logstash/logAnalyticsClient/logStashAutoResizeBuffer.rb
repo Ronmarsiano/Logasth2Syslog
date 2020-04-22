@@ -34,7 +34,7 @@ class LogStashAutoResizeBuffer
     def flush (events, close=false)
         # Skip in case there are no candidate documents to deliver
         if events.length < 1
-            @logger.warn("No events in batch for log type #{@logstashLoganalyticsConfiguration.custom_log_table_name}. Skipping")
+            @logger.warn("No events in batch ")
             return
         end
         # Sending events 

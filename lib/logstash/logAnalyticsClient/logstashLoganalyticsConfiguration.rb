@@ -1,7 +1,6 @@
 # encoding: utf-8
 class LogstashLoganalyticsOutputConfiguration
-    def initialize(custom_log_table_name, logger)
-        @custom_log_table_name = custom_log_table_name
+    def initialize(logger)
         @logger = logger
 
         @MIN_MESSAGE_AMOUNT = 100
@@ -17,17 +16,6 @@ class LogstashLoganalyticsOutputConfiguration
     def validate_configuration()
         if @max_items < @MIN_MESSAGE_AMOUNT
             raise ArgumentError, "Setting max_items to value must be greater then #{@MIN_MESSAGE_AMOUNT}."
-
-
-        elsif not @custom_log_table_name.match(/^[[:alpha:]]+$/)
-            raise ArgumentError, 'custom_log_table_name must be only alpha characters.' 
-
-        elsif custom_log_table_name.empty?
-            raise ArgumentError, 'custom_log_table_name should not be empty.' 
-            
-        elsif @key_names.length > 500
-            raise ArgumentError, 'Azure Loganalytics limits the amount of columns to 500 in each table.' 
-        end
 
         @logger.info("Azure Loganalytics configuration was found valid.")
         
@@ -47,28 +35,12 @@ class LogstashLoganalyticsOutputConfiguration
         @MAX_SIZE_BYTES
     end
 
-    def amount_resizing
-        @amount_resizing
-    end
-
     def logger
         @logger
     end
 
-    def decrease_factor
-        @decrease_factor
-    end
-
-    def custom_log_table_name
-        @custom_log_table_name
-    end
-
     def time_generated_field
         @time_generated_field
-    end
-
-    def key_names
-        @key_names
     end
 
     def max_items
@@ -91,20 +63,8 @@ class LogstashLoganalyticsOutputConfiguration
         @time_generated_field = new_time_generated_field
     end
 
-    def key_names=(new_key_names)
-        @key_names = new_key_names
-    end
-
     def plugin_flush_interval=(new_plugin_flush_interval)
         @plugin_flush_interval = new_plugin_flush_interval
-    end
-    
-    def decrease_factor=(new_decrease_factor)
-        @decrease_factor = new_decrease_factor
-    end
-
-    def amount_resizing=(new_amount_resizing)
-        @amount_resizing = new_amount_resizing
     end
 
     def max_items=(new_max_items)
