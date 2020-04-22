@@ -46,6 +46,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     if @codec.instance_of? LogStash::Codecs::Plain
       if @codec.config["format"].nil?
         @codec = LogStash::Codecs::Plain.new({"format" => @message})
+        @codec.on_event(&method(:publish))
       end
     end
 
@@ -53,15 +54,17 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   def multi_receive(events)
     events.each do |event|
-      event.set("message", @codec.encode(event))
-      event.set("mes",@message)
-      @logstash_resizable_event_buffer.add_single_event(event)
+      @codec.encode(event)
     end
   end # def multi_receive
   
   #private 
   private
 
+  def publish(event, payload)
+    @logger.error("Event: #{event} Paylod: #{payload}")
+    @logstash_resizable_event_buffer.add_single_event(event)
+  end
 
   # Building the logstash object configuration from the output configuration provided by the user
   # Return LogstashLoganalyticsOutputConfiguration populated with the configuration values
