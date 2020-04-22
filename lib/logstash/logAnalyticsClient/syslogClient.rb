@@ -64,7 +64,6 @@ class SyslogClient
       @logger.error("11111111")
       socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
       @logger.error("111111666666s11")
-      socket.write("bla bla ")
       @logger.error("ddddD")
       return socket
     end
@@ -75,7 +74,6 @@ class SyslogClient
 
   def construct_syslog_message(event)
     timestamp = Time.now.strftime("%b %e %H:%M:%S")
-    @logger.error("Timestamp: #{timestamp}\n\n")
     host = "MyMachine"
     # Here we construct the message from the tokens we have 
     syslog_message = "<34> #{timestamp} #{host} CEF:0|#{event.get("MSG").to_s}"
