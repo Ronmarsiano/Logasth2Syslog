@@ -1,8 +1,6 @@
 # encoding: utf-8
 class LogstashLoganalyticsOutputConfiguration
-    def initialize(workspace_id, workspace_key, custom_log_table_name, logger)
-        @workspace_id = workspace_id
-        @workspace_key = workspace_key
+    def initialize(custom_log_table_name, logger)
         @custom_log_table_name = custom_log_table_name
         @logger = logger
 
@@ -19,14 +17,9 @@ class LogstashLoganalyticsOutputConfiguration
     end
 
     def validate_configuration()
-        if @retransmission_time < 0
-            raise ArgumentError, "Setting retransmission_time which sets the time spent for resending each failed messages must be positive integer. [retransmission_time=#{@retransmission_time}]." 
-        
-        elsif @max_items < @MIN_MESSAGE_AMOUNT
+        if @max_items < @MIN_MESSAGE_AMOUNT
             raise ArgumentError, "Setting max_items to value must be greater then #{@MIN_MESSAGE_AMOUNT}."
 
-        elsif @workspace_id.empty? or @workspace_key.empty? or @custom_log_table_name.empty? 
-            raise ArgumentError, "Malformed configuration , the following arguments can not be null or empty.[workspace_id=#{@workspace_id} , workspace_key=#{@workspace_key} , custom_log_table_name=#{@custom_log_table_name}]"
 
         elsif not @custom_log_table_name.match(/^[[:alpha:]]+$/)
             raise ArgumentError, 'custom_log_table_name must be only alpha characters.' 
@@ -44,12 +37,12 @@ class LogstashLoganalyticsOutputConfiguration
         return  true
     end # def validate_configuration
 
-    def azure_resource_id
-        @azure_resource_id
+    def destination_ip
+        @destination_ip
     end
-
-    def RETRANSMISSION_DELAY
-        @RETRANSMISSION_DELAY
+    
+    def destination_port
+        @destination_port
     end
 
     def MAX_SIZE_BYTES
@@ -70,14 +63,6 @@ class LogstashLoganalyticsOutputConfiguration
 
     def decrease_factor
         @decrease_factor
-    end
-
-    def workspace_id
-        @workspace_id
-    end
-
-    def workspace_key
-        @workspace_key
     end
 
     def custom_log_table_name
@@ -138,14 +123,6 @@ class LogstashLoganalyticsOutputConfiguration
 
     def max_items=(new_max_items)
         @max_items = new_max_items
-    end
-    
-    def azure_resource_id=(new_azure_resource_id)
-        @azure_resource_id = new_azure_resource_id
-    end
-
-    def retransmission_time=(new_retransmission_time)
-        @retransmission_time = new_retransmission_time
     end
 
     def destination_ip=(new_destination_ip)

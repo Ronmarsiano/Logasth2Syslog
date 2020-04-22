@@ -12,12 +12,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # Stating that the output plugin will run in concurrent mode
   concurrency :shared
 
-  # Your Operations Management Suite workspace ID
-  config :workspace_id, :validate => :string, :required => true
-
-  # The primary or the secondary key used for authentication, required by Azure Loganalytics REST API
-  config :workspace_key, :validate => :string, :required => true
-
   # The name of the event type that is being submitted to Log Analytics. 
   # This must be only alpha characters.
   # Table name under custom logs in which the data will be inserted
@@ -55,13 +49,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # Setting the default amount of messages sent                                                                                                    
   # it this is set with amount_resizing=false --> each message will have max_items
   config :max_items, :validate => :number, :default => 2000
-
-  # This will set the amount of time given for retransmitting messages once sending is failed
-  config :retransmission_time, :validate => :number, :default => 10
-
-  # Optional to override the resource ID field on the workspace table.
-  # Resource ID provided must be a valid resource ID on azure 
-  config :azure_resource_id, :validate => :string, :default => ''
 
   public
   def register
@@ -114,7 +101,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # Building the logstash object configuration from the output configuration provided by the user
   # Return LogstashLoganalyticsOutputConfiguration populated with the configuration values
   def build_logstash_configuration()
-    logstash_configuration= LogstashLoganalyticsOutputConfiguration::new(@workspace_id, @workspace_key, @custom_log_table_name, @logger)    
+    logstash_configuration= LogstashLoganalyticsOutputConfiguration::new(@custom_log_table_name, @logger)    
     logstash_configuration.endpoint = @endpoint
     logstash_configuration.time_generated_field = @time_generated_field
     logstash_configuration.key_names = @key_names
@@ -122,8 +109,6 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     logstash_configuration.decrease_factor = @decrease_factor
     logstash_configuration.amount_resizing = @amount_resizing
     logstash_configuration.max_items = @max_items
-    logstash_configuration.azure_resource_id = @azure_resource_id
-    logstash_configuration.retransmission_time = @retransmission_time
     logstash_configuration.destination_ip = @destination_ip
     logstash_configuration.destination_port = @destination_port
     
