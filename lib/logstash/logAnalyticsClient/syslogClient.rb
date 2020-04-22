@@ -40,7 +40,7 @@ class SyslogClient
         @logger.error(@port.to_s)
         @logger.error("Done")
     rescue => e
-        # @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
+        @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @logger.error("Failed to send message")
         @client_socket.close rescue nil
         @client_socket = nil
