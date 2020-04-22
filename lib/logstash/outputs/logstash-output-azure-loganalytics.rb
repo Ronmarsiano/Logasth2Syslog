@@ -4,6 +4,7 @@ require "logstash/namespace"
 require "stud/buffer"
 require "logstash/logAnalyticsClient/logStashAutoResizeBuffer"
 require "logstash/logAnalyticsClient/logstashLoganalyticsConfiguration"
+require "logstash/codecs/plain"
 
 class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
@@ -39,12 +40,18 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     # If the buffer reached the max amount of messages the amount will be increased until the limit
     @logstash_resizable_event_buffer=LogStashAutoResizeBuffer::new(@logstash_configuration)
 
+    if @codec.instance_of? LogStash::Codecs::Plain
+      if @codec.config["format"].nil?
+        @codec = LogStash::Codecs::Plain.new({"format" => @message})
+      end
+    end
+    @codec.on_event(&method(:publish))
+
   end # def register
 
   def multi_receive(events)
     events.each do |event|
-      @logstash_resizable_event_buffer.add_single_event(event)
-
+      @logstash_resizable_event_buffer.add_single_event(@codec.encode(event))
     end
   end # def multi_receive
   
