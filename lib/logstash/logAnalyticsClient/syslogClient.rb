@@ -12,6 +12,8 @@ class SyslogClient
   def initialize (logstashLoganalyticsConfiguration)
     @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
     @logger = @logstashLoganalyticsConfiguration.logger
+    @destination_ip = @logstashLoganalyticsConfiguration.destination_ip
+    @destination_port = @logstashLoganalyticsConfiguration.destination_port
     @host = "52.226.134.95"
     @port = 514
     @client_socket = nil

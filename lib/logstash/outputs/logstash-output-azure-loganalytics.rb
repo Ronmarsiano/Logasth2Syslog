@@ -45,12 +45,16 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # This will trigger message amount resizing in a REST request to LA
   config :amount_resizing, :validate => :boolean, :default => true
 
+  # This will trigger message amount resizing in a REST request to LA
+  config :destination_ip, :validate => :string, :default => "52.226.134.95"
+
+  # This will trigger message amount resizing in a REST request to LA
+  config :destination_port, :validate => :number, :default => 514
+
+
   # Setting the default amount of messages sent                                                                                                    
   # it this is set with amount_resizing=false --> each message will have max_items
   config :max_items, :validate => :number, :default => 2000
-
-  # Setting proxy to be used for the Azure Loganalytics REST client
-  config :proxy, :validate => :string, :default => ''
 
   # This will set the amount of time given for retransmitting messages once sending is failed
   config :retransmission_time, :validate => :number, :default => 10
@@ -119,8 +123,9 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     logstash_configuration.amount_resizing = @amount_resizing
     logstash_configuration.max_items = @max_items
     logstash_configuration.azure_resource_id = @azure_resource_id
-    logstash_configuration.proxy = @proxy
     logstash_configuration.retransmission_time = @retransmission_time
+    logstash_configuration.destination_ip = @destination_ip
+    logstash_configuration.destination_port = @destination_port
     
     return logstash_configuration
   end # def build_logstash_configuration

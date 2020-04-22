@@ -64,10 +64,6 @@ class LogstashLoganalyticsOutputConfiguration
         @retransmission_time
     end
 
-    def proxy
-        @proxy
-    end
-
     def logger
         @logger
     end
@@ -147,12 +143,16 @@ class LogstashLoganalyticsOutputConfiguration
     def azure_resource_id=(new_azure_resource_id)
         @azure_resource_id = new_azure_resource_id
     end
-    
-    def proxy=(new_proxy)
-        @proxy = new_proxy
-    end
 
     def retransmission_time=(new_retransmission_time)
         @retransmission_time = new_retransmission_time
+    end
+
+    def destination_ip=(new_destination_ip)
+        @destination_ip = new_destination_ip
+    end
+
+    def destination_port=(new_destination_port)
+        @destination_port = new_destination_port
     end
 end
