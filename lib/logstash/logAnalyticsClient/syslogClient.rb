@@ -31,16 +31,14 @@ class SyslogClient
         documents.each do |document|
             single_syslog_message = construct_syslog_message(document)
             # @logger.error("Message to be sent: \n\n #{single_syslog_message}")
-            @client_socket.write(single_syslog_message)
-            @client_socket.write("\n")
-            # @client_socket.flush
-            @logger.error("Message was sent.")
-            # syslog_messages = syslog_messages + construct_syslog_message(document) + "\n"
+            # @client_socket.write(single_syslog_message)
+            # @client_socket.write("\n")
+            # @client_socket.flush\
+            @logger.error("Adding message")
+            syslog_messages = "#{syslog_message}#{single_syslog_message}\n"
         end
-        # @client_socket.write(syslog_messages)
-        @logger.error(@host.to_s)
-        @logger.error(@port.to_s)
-        @logger.error("Done")
+        @client_socket.write(syslog_messages)
+        @logger.error("Message was sent.\n#{syslog_messages}")
     rescue => e
         @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @logger.error("Failed to send message")
