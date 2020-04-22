@@ -34,8 +34,7 @@ class LogStashAutoResizeBuffer
         host = "MyMachine"
         # Here we construct the message from the tokens we have 
         syslog_message = "<34>#{timestamp} #{host} #{event}"
-    
-        @logger.info("Message:\n\n#{syslog_message}\n\n")
+        
         return syslog_message
       end
 
