@@ -29,7 +29,7 @@ class SyslogClient
         syslog_messages = ""
         message_counter = 0
         events.each do |single_syslog_message|
-            syslog_messages = "#{syslog_messages}#{single_syslog_message}\n"
+            syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
             message_counter = message_counter + 1
         end
         @client_socket.write(syslog_messages)
