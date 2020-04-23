@@ -28,6 +28,11 @@ class SyslogClient
         end
         syslog_messages = ""
         message_counter = 0
+
+        @logger.error("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        events.join("\n")
+        @logger.error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+
         events.each do |single_syslog_message|
             syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
             message_counter = message_counter + 1
