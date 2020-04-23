@@ -30,13 +30,13 @@ class SyslogClient
         message_counter = 0
 
         @logger.error("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-        events.join("\n")
-        @logger.error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        syslog_messages = events.join("\n")
+        @logger.error("#{syslog_messages}")
 
-        events.each do |single_syslog_message|
-            syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
-            message_counter = message_counter + 1
-        end
+        # events.each do |single_syslog_message|
+        #     syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
+        #     message_counter = message_counter + 1
+        # end
         @client_socket.write(syslog_messages)
         @logger.info("Messages(#{message_counter}) sent.")
     rescue => e
