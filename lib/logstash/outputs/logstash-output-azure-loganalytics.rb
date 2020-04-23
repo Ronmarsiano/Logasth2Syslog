@@ -60,8 +60,8 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   def publish(event, payload)
     # strip the message from special characters 
-    tripped_message = payload.to_s.rstrip.gsub(/[\r][\n]/, "\n").gsub(/[\n]/, '\n')
-    @logstash_resizable_event_buffer.add_single_event(tripped_message)
+    stripped_message = payload.to_s.rstrip.gsub(/[\r][\n]/, "\n").gsub(/[\n]/, '\n')
+    @logstash_resizable_event_buffer.add_single_event(stripped_message)
   end
 
   # Building the logstash object configuration from the output configuration provided by the user
