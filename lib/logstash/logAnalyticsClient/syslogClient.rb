@@ -26,19 +26,15 @@ class SyslogClient
             @logger.info("trying to connect the socket")
             @client_socket = connect()
         end
-        syslog_messages = ""
-        message_counter = 0
 
-        @logger.error("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
         syslog_messages = events.join("\n")
-        @logger.error("#{syslog_messages}")
 
         # events.each do |single_syslog_message|
         #     syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
         #     message_counter = message_counter + 1
         # end
         @client_socket.write(syslog_messages)
-        @logger.info("Messages(#{message_counter}) sent.")
+        @logger.info("Messages(#{events.length.to_s}) sent.")
     rescue => e
         # @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @logger.error("TCP connection was closed and will try to reopen.\nException:\n#{e.to_s}\n\n")
