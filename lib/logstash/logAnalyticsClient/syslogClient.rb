@@ -27,10 +27,11 @@ class SyslogClient
             @client_socket = connect()
         end
 
+        syslog_messages =""
         events.each do |single_syslog_message|
             syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
         end
-        
+
         @client_socket.write(syslog_messages)
         @logger.info("Messages(#{events.length.to_s}) sent.")
     rescue => e
