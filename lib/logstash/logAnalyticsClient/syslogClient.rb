@@ -27,12 +27,10 @@ class SyslogClient
             @client_socket = connect()
         end
 
-        syslog_messages = events.join("\n")
-
-        # events.each do |single_syslog_message|
-        #     syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
-        #     message_counter = message_counter + 1
-        # end
+        events.each do |single_syslog_message|
+            syslog_messages = syslog_messages.concat(single_syslog_message).concat("\n")
+        end
+        
         @client_socket.write(syslog_messages)
         @logger.info("Messages(#{events.length.to_s}) sent.")
     rescue => e
@@ -51,12 +49,12 @@ class SyslogClient
     if @udp == true
       socket = UDPSocket.new
       socket.connect(@destination_ip, @destination_port)
+      return socket
     else
         socket = TCPSocket.new(@destination_ip, @destination_port)
         # Setting a keep alive on the socket 
         socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
         return socket
     end
-    return socket
   end
 end # end of class

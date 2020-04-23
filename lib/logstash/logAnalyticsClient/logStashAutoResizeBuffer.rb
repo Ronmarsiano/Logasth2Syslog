@@ -34,7 +34,7 @@ class LogStashAutoResizeBuffer
         host = "MyMachine"
         # Here we construct the message from the tokens we have 
         syslog_message = "<34>#{timestamp} #{host} #{event}"
-        
+
         return syslog_message
       end
 
@@ -46,8 +46,7 @@ class LogStashAutoResizeBuffer
             @logger.warn("No events in batch ")
             return
         end
-        # Sending events 
-        @logger.info("Sending #{events.length} events.")
+        
         @client.send_messages(events)
     end # def flush
 end # LogStashAutoResizeBuffer
