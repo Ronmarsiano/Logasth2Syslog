@@ -1,8 +1,6 @@
 # encoding: utf-8
 require "stud/buffer"
-require "logstash/logAnalyticsClient/logAnalyticsClient"
 require "logstash/logAnalyticsClient/syslogClient"
-require "stud/buffer"
 require "logstash/logAnalyticsClient/logstashLoganalyticsConfiguration"
 
 # LogStashAutoResizeBuffer class setting a resizable buffer which is flushed periodically
@@ -46,7 +44,7 @@ class LogStashAutoResizeBuffer
             @logger.warn("No events in batch ")
             return
         end
-        
+
         @client.send_messages(events)
     end # def flush
 end # LogStashAutoResizeBuffer
