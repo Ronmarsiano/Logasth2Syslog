@@ -24,6 +24,8 @@ cd /usr/share/logstash
 echo "Remove old plugin"
 
 sudo /usr/share/logstash/bin/logstash-plugin remove foo
+sudo /usr/share/logstash/bin/logstash-plugin remove logstash-output-azure-loganalytics
+
 
 cd ${cwd}
 
