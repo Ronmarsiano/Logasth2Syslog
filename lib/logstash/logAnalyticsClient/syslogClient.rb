@@ -31,7 +31,6 @@ class SyslogClient
         @client_socket.write(syslog_messages)
         @logger.info("Messages(#{events.length.to_s}) sent.")
     rescue => e
-        # @logger.error("syslog " + @protocol + " output exception: closing, reconnecting and resending event", :host => @host, :port => @port, :exception => e, :backtrace => e.backtrace)
         @logger.error("TCP connection was closed and will try to reopen.\nException:\n#{e.to_s}\n\n")
         @client_socket.close rescue nil
         @client_socket = nil
