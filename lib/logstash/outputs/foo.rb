@@ -8,7 +8,7 @@ require "logstash/codecs/plain"
 
 class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
-  config_name "logstash-output-azure-loganalytics"
+  config_name "foo"
   
   # Stating that the output plugin will run in concurrent mode
   concurrency :shared
