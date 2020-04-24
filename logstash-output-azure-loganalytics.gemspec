@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version    =  File.read("VERSION").strip
   s.authors = ["Ron Marsiano"]
   s.email = "romarsia@outlook.com"
-  s.summary = %q{Azure Sentinel provides a new output plugin for Logstash. Using this output plugin, you will be able to send any log you want using Logstash to the Azure Sentinel/Log Analytics workspace}
+  s.summary = "Azure Sentinel provides a new output plugin for Logstash. Using this output plugin, you will be able to send any log you want using Logstash to the Azure Sentinel/Log Analytics workspace"
   s.description = s.summary
   s.homepage = "https://github.com/Azure/Azure-Sentinel"
   s.licenses = ["Apache License (2.0)"]
