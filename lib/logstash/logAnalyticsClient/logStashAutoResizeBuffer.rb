@@ -1,21 +1,21 @@
 # encoding: utf-8
 require "stud/buffer"
 require "logstash/logAnalyticsClient/syslogClient"
-require "logstash/logAnalyticsClient/logstashLoganalyticsConfiguration"
+require "logstash/logAnalyticsClient/logstashSyslogConfiguration"
 
 # LogStashAutoResizeBuffer class setting a resizable buffer which is flushed periodically
 # The buffer resize itself according to Azure Loganalytics  and configuration limitations
 class LogStashAutoResizeBuffer
     include Stud::Buffer
 
-    def initialize(logstashLoganalyticsConfiguration)
-        @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
-        @logger = @logstashLoganalyticsConfiguration.logger
-        @client=SyslogClient::new(logstashLoganalyticsConfiguration)
+    def initialize(logstashSyslogConfiguration)
+        @logstashSyslogConfiguration = logstashSyslogConfiguration
+        @logger = @logstashSyslogConfiguration.logger
+        @client=SyslogClient::new(logstashSyslogConfiguration)
         buffer_initialize(
-          :max_items => logstashLoganalyticsConfiguration.max_items,
-          :max_interval => logstashLoganalyticsConfiguration.plugin_flush_interval,
-          :logger => @logstashLoganalyticsConfiguration.logger
+          :max_items => logstashSyslogConfiguration.max_items,
+          :max_interval => logstashSyslogConfiguration.plugin_flush_interval,
+          :logger => @logstashSyslogConfiguration.logger
         )
     end # initialize
 

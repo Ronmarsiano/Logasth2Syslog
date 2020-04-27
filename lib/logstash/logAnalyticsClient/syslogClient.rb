@@ -1,13 +1,13 @@
 # encoding: utf-8
-require "logstash/logAnalyticsClient/logstashLoganalyticsConfiguration"
+require "logstash/logAnalyticsClient/logstashSyslogConfiguration"
 require 'socket'
 require 'time'
 
 class SyslogClient
 
-  def initialize (logstashLoganalyticsConfiguration)
-    @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
-    @logger = @logstashLoganalyticsConfiguration.logger
+  def initialize (logstashSyslogConfiguration)
+    @logstashSyslogConfiguration = logstashSyslogConfiguration
+    @logger = @logstashSyslogConfiguration.logger
     @client_socket = nil
     @reconnect_interval = 1000
   end # def initialize
@@ -39,14 +39,14 @@ class SyslogClient
 
 
   def connect()
-    if @logstashLoganalyticsConfiguration.tcp_protocol == true
-      socket = TCPSocket.new(@logstashLoganalyticsConfiguration.destination_ip, @logstashLoganalyticsConfiguration.destination_port)
+    if @logstashSyslogConfiguration.tcp_protocol == true
+      socket = TCPSocket.new(@logstashSyslogConfiguration.destination_ip, @logstashSyslogConfiguration.destination_port)
       # Setting a keep alive on the socket 
       socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
       return socket
     else
       socket = UDPSocket.new
-      socket.connect(@logstashLoganalyticsConfiguration.destination_ip, @logstashLoganalyticsConfiguration.destination_port)
+      socket.connect(@logstashSyslogConfiguration.destination_ip, @logstashSyslogConfiguration.destination_port)
       return socket
     end
   end

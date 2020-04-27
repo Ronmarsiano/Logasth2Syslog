@@ -1,5 +1,5 @@
 # encoding: utf-8
-class LogstashLoganalyticsOutputConfiguration
+class LogstashSyslogConfiguration
     def initialize(logger)
         @logger = logger
 
