@@ -20,7 +20,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   config :plugin_flush_interval, :validate => :number, :default => 5
 
   # This will trigger message amount resizing in a REST request to LA
-  config :destination_ip, :validate => :string, :default => "52.226.134.95"
+  config :destination_ip, :validate => :string, :default => "127.0.0.1"
 
   # This will trigger message amount resizing in a REST request to LA
   config :destination_port, :validate => :number, :default => 514
@@ -75,7 +75,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     logstash_configuration.destination_ip = @destination_ip
     logstash_configuration.destination_port = @destination_port
     logstash_configuration.tcp_protocol = @tcp_protocol
-    
+
     return logstash_configuration
   end # def build_logstash_configuration
 
