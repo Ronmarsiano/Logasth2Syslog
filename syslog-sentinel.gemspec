@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = 'foo'
+  s.name = 'syslog-sentinel'
   s.version    =  File.read("VERSION").strip
   s.authors = ["Ron Marsiano"]
   s.email = "romarsia@outlook.com"

@@ -8,7 +8,7 @@ require "logstash/codecs/plain"
 
 class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
-  config_name "foo"
+  config_name "syslog-sentinel"
   
   # Stating that the output plugin will run in concurrent mode
   concurrency :shared
@@ -25,7 +25,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
   # This will trigger message amount resizing in a REST request to LA
   config :destination_port, :validate => :number, :default => 514
 
-  # message text to log. The new value can include `%{foo}` strings
+  # message text to log. The new value can include `%{syslog-sentinel}` strings
   # to help you build a new value from other parts of the event.
   config :message, :validate => :string, :default => "%{message}"
 

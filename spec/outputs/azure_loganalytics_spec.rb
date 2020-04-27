@@ -1,6 +1,6 @@
 # encoding: utf-8
 require "logstash/devutils/rspec/spec_helper"
-require "logstash/outputs/foo"
+require "logstash/outputs/syslog-sentinel"
 require "logstash/codecs/plain"
 
 describe LogStash::Outputs::AzureLogAnalytics do

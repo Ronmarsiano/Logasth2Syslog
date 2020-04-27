@@ -7,7 +7,7 @@ sudo apt  install ruby
 
 echo "Remove old gem file"
 
-sudo rm foo-1.0.0.gem
+sudo rm syslog-sentinel-1.0.0.gem
 
 echo "Pulling data from github"
 
@@ -15,7 +15,7 @@ git pull
 
 echo "Building new logstash plugin"
 
-gem build foo.gemspec
+gem build syslog-sentinel.gemspec
 
 cwd=$(pwd)
 
@@ -23,7 +23,7 @@ cd /usr/share/logstash
 
 echo "Remove old plugin"
 
-sudo /usr/share/logstash/bin/logstash-plugin remove foo
+sudo /usr/share/logstash/bin/logstash-plugin remove syslog-sentinel
 sudo /usr/share/logstash/bin/logstash-plugin remove logstash-output-azure-loganalytics
 
 
@@ -31,7 +31,7 @@ cd ${cwd}
 
 echo "Install new plugin"
 
-sudo /usr/share/logstash/bin/logstash-plugin install foo-1.0.0.gem
+sudo /usr/share/logstash/bin/logstash-plugin install syslog-sentinel-1.0.0.gem
 
 echo "Done"
 
