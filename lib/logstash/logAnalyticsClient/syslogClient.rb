@@ -8,7 +8,6 @@ class SyslogClient
   def initialize (logstashLoganalyticsConfiguration)
     @logstashLoganalyticsConfiguration = logstashLoganalyticsConfiguration
     @logger = @logstashLoganalyticsConfiguration.logger
-    @destination_port = @logstashLoganalyticsConfiguration.destination_port
     @client_socket = nil
     @udp = false
     @reconnect_interval = 1000
@@ -43,10 +42,10 @@ class SyslogClient
   def connect()
     if @udp == true
       socket = UDPSocket.new
-      socket.connect(@logstashLoganalyticsConfiguration.destination_ip, @destination_port)
+      socket.connect(@logstashLoganalyticsConfiguration.destination_ip, @logstashLoganalyticsConfiguration.destination_port)
       return socket
     else
-        socket = TCPSocket.new(@logstashLoganalyticsConfiguration.destination_ip, @destination_port)
+        socket = TCPSocket.new(@logstashLoganalyticsConfiguration.destination_ip, @logstashLoganalyticsConfiguration.destination_port)
         # Setting a keep alive on the socket 
         socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
         return socket
