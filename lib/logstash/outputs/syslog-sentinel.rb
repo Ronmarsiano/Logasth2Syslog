@@ -31,6 +31,8 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
 
   config :max_items, :validate => :number, :default => 2000
 
+  config :tcp_protocol, :validate => :boolean, :default => true
+
   public
   def register
     @logstash_configuration= build_logstash_configuration()
@@ -72,6 +74,7 @@ class LogStash::Outputs::AzureLogAnalytics < LogStash::Outputs::Base
     logstash_configuration.max_items = @max_items
     logstash_configuration.destination_ip = @destination_ip
     logstash_configuration.destination_port = @destination_port
+    logstash_configuration.tcp_protocol = @tcp_protocol
     
     return logstash_configuration
   end # def build_logstash_configuration

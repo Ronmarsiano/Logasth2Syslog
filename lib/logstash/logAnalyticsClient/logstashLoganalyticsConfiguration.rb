@@ -51,8 +51,12 @@ class LogstashLoganalyticsOutputConfiguration
         @MIN_MESSAGE_AMOUNT
     end
     
-    def max_items=(new_max_items)
-        @max_items = new_max_items
+    def tcp_protocol
+        @tcp_protocol
+    end
+
+    def tcp_protocol=(new_tcp_protocol)
+        @tcp_protocol = new_tcp_protocol
     end
 
     def plugin_flush_interval=(new_plugin_flush_interval)
